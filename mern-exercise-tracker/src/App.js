@@ -10,9 +10,11 @@ import CreateUser from './components/create-users.component';
 
 function App() {
   return (
-    <>
+    
+    <div className="container">
       <Navbar/>
       <br />
+      
       <Routes>
      
         <Route path="/" exact element={<ExerciseList />}></Route>
@@ -21,8 +23,7 @@ function App() {
         <Route path="/user" element={<CreateUser />}></Route>
 
       </Routes>
-
-    </>
+      </div>
 
   );
 }

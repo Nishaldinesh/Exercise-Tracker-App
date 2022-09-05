@@ -1,11 +1,12 @@
-import React,{Component} from "react";
+import React from "react";
 
-export default class ExercisesList extends Component{
-    render(){
+const ExerciseList=()=>{
+    
         return(
             <div>
                 <p>You are on the exercises list component</p>
             </div>
         )
-    }
 }
+
+export default ExerciseList;

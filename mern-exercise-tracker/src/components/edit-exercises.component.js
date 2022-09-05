@@ -1,11 +1,11 @@
-import React,{Component} from "react";
+import React from "react";
 
-export default class EditExercises extends Component{
-    render(){
+const EditExercises=()=>{
+    
         return(
             <div>
                 <p>You are on the edit ecercises component</p>
             </div>
         )
     }
-}
+ export default EditExercises;
