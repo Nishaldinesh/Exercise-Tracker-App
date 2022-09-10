@@ -1,45 +1,55 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
 const CreateExercises = () => {
 
-
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
-    const [users,setUsers]=useState([]);
+    const [users, setUsers] = useState([]);
     const [description, setDescription] = useState('');
     const [duration, setDuration] = useState('');
     const [startDate, setStartDate] = useState(new Date());
-    
-    useEffect(()=>{
-        axios.get("http://localhost:5000/users")
-        .then((response)=>{
-         if(response.data.length >0){
-            let users= response.data.map(users =>users.username)
-             setUsers(users);
-             setUsername(users[0])
-         }
-         
-        })
-     },[])
 
-    const handleSubmit=(e)=>{
+    useEffect(() => {
+        axios.get("http://localhost:5000/users")
+            .then((response) => {
+                if (response.data.length > 0) {
+                    let users = response.data.map(users => users.username)
+                    setUsers(users);
+                    setUsername(users[0])
+                }
+
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [])
+
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        const exercise={
-            username :username,
-            description :description,
-            duration :duration,
+        const exercise = {
+            username: username,
+            description: description,
+            duration: duration,
             date: startDate
         }
 
         console.log(exercise);
 
-        axios.post("http://localhost:5000/exercises/add",exercise)
-        .then((response)=>{
-            console.log(response.data);
-        })
+        axios.post("http://localhost:5000/exercises/add", exercise)
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+        navigate('/');
+
 
     }
 
@@ -100,7 +110,7 @@ const CreateExercises = () => {
                 </div>
 
                 <div className="form-group mt-3">
-                    <input type="submit" value="Edit Exercise Log" className="btn btn-primary" />
+                    <input type="submit" value="Create Exercise Log" className="btn btn-primary" />
                 </div>
             </form>
         </div>
