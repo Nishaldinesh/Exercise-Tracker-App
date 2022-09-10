@@ -39,6 +39,7 @@ router.route('/:id').delete((req,res,next)=>{
 });
 
 router.route('/update/:id').post((req,res)=>{
+  console.log(req.params.id);
     Exercise.findById(req.params.id)
     .then(exercise =>{
         exercise.username = req.body.username;

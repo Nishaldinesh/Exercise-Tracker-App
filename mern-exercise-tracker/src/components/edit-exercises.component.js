@@ -8,9 +8,9 @@ const EditExercises = () => {
     const location = useLocation();
     const { id } = location.state
     const [users, setUsers] = useState([]);
-    const [username, setUsername] = useState();
-    const [description, setDescription] = useState();
-    const [duration, setDuration] = useState();
+    const [username, setUsername] = useState('');
+    const [description, setDescription] = useState('');
+    const [duration, setDuration] = useState('');
     const [startDate, setStartDate] = useState(new Date());
 
 
@@ -18,6 +18,11 @@ const EditExercises = () => {
         axios.get("http://localhost:5000/exercises/" + id)
             .then((response) => {
                 console.log(response.data);
+                setUsername(response.data.username);
+                setDescription(response.data.description);
+                setDuration(response.data.duration);
+                setStartDate (new Date(response.data.date));
+
             })
             .catch((err) => {
                 console.log(err);
@@ -37,10 +42,28 @@ const EditExercises = () => {
             })
     }, [])
 
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+
+        const exercise = {
+            username: username,
+            description: description,
+            duration: duration,
+            date: startDate
+        }
+
+        axios.post("http://localhost:5000/exercises/update/" + id, exercise)
+        .then((response)=>{
+            console.log(response.data);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    }
     return (
         <div>
             <h3>Edit Exercise Log</h3>
-            <form >
+            <form onSubmit={handleSubmit} >
                 <div className="form-group">
                     <label>Username : </label>
                     <select
@@ -65,6 +88,8 @@ const EditExercises = () => {
                     <input type="text"
                         required
                         className="form-control"
+                        value={description}
+                        onChange={(e)=>setDescription(e.target.value)}
 
                     />
                 </div>
@@ -73,6 +98,8 @@ const EditExercises = () => {
                     <input
                         type="text"
                         className="form-control"
+                        value={duration}
+                        onChange={(e)=>setDuration(e.target.value)}
 
                     />
                 </div>
